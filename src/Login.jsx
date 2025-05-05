@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -12,7 +14,7 @@ function Login() {
     e.preventDefault();
     try {
       // Cambia la URL por la de tu API real
-      const res = await fetch('http://localhost:3000/api/login', {
+      const res = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -21,6 +23,7 @@ function Login() {
       if (res.ok) {
         setMessage('Login exitoso');
         localStorage.setItem('token', data.token); // Guarda el token
+        setTimeout(() => navigate('/editor'), 1000); // Redirige tras 1 segundo
       } else setMessage(data.message || 'Error al iniciar sesión');
     } catch (err) {
       setMessage('Error de red');
