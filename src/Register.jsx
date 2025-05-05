@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Register() {
   const [form, setForm] = useState({ username: '', password: '' });
@@ -39,6 +40,8 @@ function Register() {
           <input name="password" type="password" className="form-control" placeholder="Contraseña" value={form.password} onChange={handleChange} required />
         </div>
         <button type="submit" className="btn btn-primary w-100">Registrarse</button>
+        <Link to="/login" style={{ marginRight: 10 }}>Si ya tienes usuario, accede</Link>
+
       </form>
       {message && <div className="alert alert-info mt-3">{message}</div>}
     </div>

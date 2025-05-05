@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [form, setForm] = useState({ username: '', password: '' });
@@ -23,6 +24,7 @@ function Login() {
       if (res.ok) {
         setMessage('Login exitoso');
         localStorage.setItem('token', data.token); // Guarda el token
+        localStorage.setItem('username', form.username); // Guarda el username
         setTimeout(() => navigate('/editor'), 1000); // Redirige tras 1 segundo
       } else setMessage(data.message || 'Error al iniciar sesión');
     } catch (err) {
@@ -41,6 +43,7 @@ function Login() {
           <input name="password" type="password" className="form-control" placeholder="Contraseña" value={form.password} onChange={handleChange} required />
         </div>
         <button type="submit" className="btn btn-success w-100">Entrar</button>
+        <Link to="/register" style={{ marginRight: 10 }}>Sino tienes usuario, crealo</Link>
       </form>
       {message && <div className="alert alert-info mt-3">{message}</div>}
     </div>
