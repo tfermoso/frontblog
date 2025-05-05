@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import Editor from './Editor';
+import AddPost from './AddPost';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/editor" element={<Editor />} />
+        <Route path="/add" element={<AddPost />} />
         <Route path="/" element={
           <div>
             <h1>Bienvenido a la app</h1>
