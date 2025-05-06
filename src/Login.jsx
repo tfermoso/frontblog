@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { apiLogin } from './apiService';
 
 function Login() {
   const [form, setForm] = useState({ username: '', password: '' });
@@ -14,12 +15,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Cambia la URL por la de tu API real
-      const res = await fetch('http://localhost:3001/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+      const res = await apiLogin(form);
       const data = await res.json();
       if (res.ok) {
         setMessage('Login exitoso');

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiGetMyPosts, apiDeletePost } from './apiService';
 
 function Editor() {
   const [posts, setPosts] = useState([]);
@@ -16,9 +17,7 @@ function Editor() {
         return;
       }
       try {
-        const res = await fetch('http://localhost:3001/api/posts/my/', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const res = await apiGetMyPosts(token);
         if (!res.ok) throw new Error('Error al obtener posts');
         const data = await res.json();
         setPosts(data);
@@ -40,10 +39,7 @@ function Editor() {
     if (!window.confirm('¿Seguro que quieres borrar este post?')) return;
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:3001/api/posts/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await apiDeletePost(id, token);
       if (res.ok) {
         setPosts(posts.filter(post => post.id !== id));
       } else {

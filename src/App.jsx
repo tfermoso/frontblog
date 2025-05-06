@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <Router basename="/blog">
+    <Router >
       
       <Routes>
         <Route path="/register" element={<Register />} />

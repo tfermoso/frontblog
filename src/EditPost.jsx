@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { apiGetPostById, apiEditPost } from './apiService';
 
 function EditPost() {
   const [form, setForm] = useState({ titulo: '', descripcion: '' });
@@ -16,9 +17,7 @@ function EditPost() {
     }
     const fetchPost = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/api/posts/${id}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const res = await apiGetPostById(id, token);
         if (!res.ok) throw new Error('No se pudo cargar el post');
         const data = await res.json();
         setForm({ titulo: data.titulo, descripcion: data.descripcion });
@@ -39,14 +38,7 @@ function EditPost() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:3001/api/posts/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(form),
-      });
+      const res = await apiEditPost(id, form, token);
       if (res.ok) {
         setMessage('Post actualizado con éxito');
         setTimeout(() => navigate('/editor'), 1000);

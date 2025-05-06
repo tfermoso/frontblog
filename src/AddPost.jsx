@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiAddPost } from './apiService';
 
 function AddPost() {
   const [form, setForm] = useState({ titulo: '', descripcion: '' });
@@ -18,14 +19,7 @@ function AddPost() {
       return;
     }
     try {
-      const res = await fetch('http://localhost:3001/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(form),
-      });
+      const res = await apiAddPost(form, token);
       if (res.ok) {
         setMessage('Post creado con éxito');
         setTimeout(() => navigate('/editor'), 1000);

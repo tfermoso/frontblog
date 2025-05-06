@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { apiRegister } from './apiService';
 
 function Register() {
   const [form, setForm] = useState({ username: '', password: '' });
@@ -14,11 +15,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3001/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+      const res = await apiRegister(form);
       const data = await res.json();
       if (res.ok) {
         setMessage('Usuario registrado con éxito');
