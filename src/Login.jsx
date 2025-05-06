@@ -14,23 +14,13 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Cambia la URL por la de tu API real
-      const res = await fetch('http://localhost:3001/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage('Login exitoso');
-        localStorage.setItem('token', data.token); // Guarda el token
-        localStorage.setItem('username', form.username); // Guarda el username
-        setTimeout(() => navigate('/editor'), 1000); // Redirige tras 1 segundo
-      } else setMessage(data.message || 'Error al iniciar sesión');
-    } catch (err) {
-      setMessage('Error de red');
-    }
+    const res = await fakeLogin(form);
+    if (res.ok) {
+      setMessage('Login exitoso');
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('username', res.username);
+      setTimeout(() => navigate('/editor'), 1000);
+    } else setMessage(res.message || 'Error al iniciar sesión');
   };
 
   return (
